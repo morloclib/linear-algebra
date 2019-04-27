@@ -1,13 +1,4 @@
-import json as j
 import numpy as np
-
-#  JSON -> Matrix
-def unpackMatrix(x):
-    return(np.matrix(j.loads(x)))
-
-#  Matrix -> JSON
-def packMatrix(x):
-    return(j.dumps(x.tolist()))
 
 def pool(m, f, I, J):
     rows = list()
