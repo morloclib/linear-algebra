@@ -1,0 +1,60 @@
+source "py" from "linear_algebra.py" (
+   "add"
+ , "matrix"
+ , "matrix_multiply"
+ , "scalar_multiply"
+ , "sub"
+ , "sum"
+ , "tolist"
+ , "transpose"
+ # type handling
+ , "packMatrix"
+ , "unpackMatrix"
+)
+
+source "R" from "linear_algebra.R" (
+   "random_distance_matrix"
+ # type handling;
+ , "packMatrix"
+ , "unpackMatrix"
+)
+
+# Serialization functions
+packMatrix   py :: packs   => Matrix -> JSON;
+unpackMatrix py :: unpacks => JSON   -> Matrix;
+
+packMatrix   R :: packs   => Matrix -> JSON;
+unpackMatrix R :: unpacks => JSON   -> Matrix;
+
+# Matrix operations
+transpose       :: Matrix a n m -> Matrix a m n
+matrix_add      :: Matrix Num n m, Matrix Num n m -> Matrix Num n m
+matrix_sub      :: Matrix Num n m, Matrix Num n m -> Matrix Num n m
+multiply        :: Matrix Num n m, Matrix Num n m -> Matrix Num n m
+matrix_multiply :: Matrix Num n m, Matrix Num m d -> Matrix Num n d
+
+# Scalar operations
+matrix_round    :: Matrix Num n m      -> Matrix Int n m
+scalar_multiply :: Matrix Num n m, Num -> Matrix Num n m
+scalar_add      :: Matrix Num n m, Num -> Matrix Num n m
+
+# Summaries 
+diagonal        :: Matrix a   k k -> List a k 
+matrix_sum      :: Matrix Num n m -> Num
+matrix_max      :: Matrix Num n m -> Num
+matrix_min      :: Matrix Num n m -> Num
+
+# Create new matrices
+matrix          :: List (List a n) m -> Matrix a n m
+random_matrix   :: m:Int, n:Int -> Matrix Num m n where (m > 0, n > 0)
+random_distance_matrix :: k:Int -> m:Matrix Num k k where (
+     all [m[i,i] == 0; i <- 1:k]
+     all [m[i,j] == m[j,i]; i <- 1:k; j <- 1:k]
+  )
+
+# Conversions
+tolist :: Matrix a n m -> List (List a n) m
+
+# Convolusions and sampling (the cool stuff)
+pool :: Matrix a m n, (Matrix a j k -> a), j, k -> Matrix a (m / j) (n / k)
+    where ( m % j == 0, n % k == 0 )

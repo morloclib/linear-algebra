@@ -1,0 +1,11 @@
+name: linear_algebra
+version: 0.0.0
+homepage: https://github.com/morloclib/
+synopsis: Linear algebra functions
+description: ladida
+category: math
+license: MIT
+author: "Zebulun Arendsee"
+maintainer: "zbwrnz@gmail.com"
+github: https://github.com/morloclib/linear_algebra
+bug-reports: https://github.com/morloclib/linear_algebra
