@@ -9,12 +9,13 @@ source "py" from "linear_algebra.py" (
  , "sub"
  , "sum"
  , "tolist"
- , "transpose"
 );
 
 source "R" from "linear_algebra.R" (
    "random_distance_matrix"
 );
+
+source "R" ("t" as transpose);
 
 export add
 export matrix
