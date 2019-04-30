@@ -27,8 +27,17 @@ export tolist
 export transpose
 export random_distance_matrix
 
+# type Matrix = Matrix a i:Int j:Int where (
+#     i > 0,
+#     j > 0
+# )
+
 # Matrix operations
+#    cell type -----------v
+#    number of rows --------v
+#    number of columns -------v
 transpose       :: Matrix a n m -> Matrix a m n;
+
 matrix_add      :: Matrix Num n m, Matrix Num n m -> Matrix Num n m;
 matrix_sub      :: Matrix Num n m, Matrix Num n m -> Matrix Num n m;
 multiply        :: Matrix Num n m, Matrix Num n m -> Matrix Num n m;
@@ -48,11 +57,12 @@ matrix_min      :: Matrix Num n m -> Num;
 # Create new matrices
 matrix          :: List (List a n) m -> Matrix a n m;
 random_matrix   :: m:Int, n:Int -> Matrix Num m n where (m > 0, n > 0);
-# random_distance_matrix :: k:Int -> m:Matrix Num k k;
-# # random_distance_matrix :: k:Int -> m:Matrix Num k k where (
-# #      all [m[i,i] == 0; i <- 1:k],
-# #      all [m[i,j] == m[j,i]; i <- 1:k; j <- 1:k]
-# #   );
+random_distance_matrix :: Int -> Matrix Num k k;
+# # TODO: allow labels on parameterized types
+# random_distance_matrix :: k:Int -> m:Matrix Num k k where (
+#      all [m[i,i] == 0; i <- 1:k],
+#      all [m[i,j] == m[j,i]; i <- 1:k; j <- 1:k]
+#   );
 
 # Conversions
 tolist :: Matrix a n m -> List (List a n) m;
@@ -61,5 +71,6 @@ tolist :: Matrix a n m -> List (List a n) m;
 pool :: Matrix a m1 n1, (Matrix a j k -> a), j, k -> Matrix a m2 n2
     where (m2 == m1 / j, n2 == n2 / k);
 
+# # TODO: allow type arithmetic expressions
 # pool :: Matrix a m n, (Matrix a j k -> a), j, k -> Matrix a (m / j) (n / k)
 #     where ( m % j == 0, n % k == 0 );
